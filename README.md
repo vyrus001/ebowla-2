@@ -35,8 +35,8 @@ Demos:
 
 ### Contributors
 Original Project:
-*https://github.com/wired33 (wrote most of the golang payload code)
-*https://github.com/secretsquirrel (wrote the python payload code and most of the encryption code)
+* https://github.com/wired33 (wrote most of the golang payload code)
+* https://github.com/secretsquirrel (wrote the python payload code and most of the encryption code)
 
 This Project:
-*https://github.com/secretsquirrel
+* https://github.com/secretsquirrel
