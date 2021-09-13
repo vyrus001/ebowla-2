@@ -10,7 +10,6 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"strings"
 	"sync"
 )
 
@@ -23,7 +22,6 @@ var (
 func main() {
 	//loader, err := universal.NewLoader()
 	//checkFatalErr("failed to instantiate loader", err)
-
 	if len(seedPath) < 1 {
 		seedPath = os.Getenv("SystemDrive") + string(os.PathSeparator)
 	}
@@ -39,6 +37,9 @@ func main() {
 			for {
 				seedFile, err := ioutil.ReadFile(<-potentialSeeds)
 				if err != nil {
+					continue
+				}
+				if keyOffset+32 > uint64(len(seedFile)) {
 					continue
 				}
 
@@ -74,13 +75,8 @@ func main() {
 	}
 
 	filepath.Walk(seedPath, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return nil
-		}
-		if !info.IsDir() {
-			if strings.HasSuffix(path, seedPath) {
-				potentialSeeds <- path
-			}
+		if !info.IsDir() && err == nil {
+			potentialSeeds <- path
 		}
 		return nil
 	})
