@@ -18,14 +18,18 @@ go build -ldflags "-X main.seedPath=<path to search for seed files>"
 
 ### Concept Presentation Resources
 Slides:
+
 *Infiltrate 2016: https://github.com/Genetic-Malware/Ebowla/raw/master/Infiltrate_2016_Morrow_Pitts_Genetic_Malware.pdf
+
 *Ekoparty 2016: https://github.com/Genetic-Malware/Ebowla/blob/master/Eko_2016_Morrow_Pitts_Master.pdf
 
 Demos:
-
 *https://www.youtube.com/watch?v=rRm3O7w5GHg
+
 *https://youtu.be/Bu_qDrbX9Zo
+
 *https://youtu.be/mlh70LtwmDo
+
 *https://youtu.be/lyedtAtATGc (PowerShell)
 
 # Payload Support
