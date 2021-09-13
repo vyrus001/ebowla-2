@@ -11,6 +11,7 @@ mv package ../implant
 
 creating and running the implant:
 ```
+cd ebowla-2/implant
 go build -ldflags "-X main.seedPath=<path to search for seed files>"
 .\implant.exe
 ```
