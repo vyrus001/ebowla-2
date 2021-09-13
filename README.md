@@ -24,9 +24,8 @@ Slides:
 *Ekoparty 2016: https://github.com/Genetic-Malware/Ebowla/blob/master/Eko_2016_Morrow_Pitts_Master.pdf
 
 Demos:
-*https://www.youtube.com/watch?v=rRm3O7w5GHg
-
-*https://youtu.be/Bu_qDrbX9Zo
+https://www.youtube.com/watch?v=rRm3O7w5GHg
+https://youtu.be/Bu_qDrbX9Zo
 
 *https://youtu.be/mlh70LtwmDo
 
