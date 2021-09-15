@@ -2,17 +2,16 @@
 reboot of https://github.com/Genetic-Malware/Ebowla in order to simplify / modernize the codebase and provide ongoing support
 
 # Building / Running
-creating a payload:
+the following is an example of compiling a hello world golang exe, packaging it into an encrypted package, and finally, building the implant with the package embedded within.
 ```
-cd ebowla-2/package
-go run .\main.go -p <path to payload> -s <path to seed fiile>
-mv package ../implant
-```
-
-creating and running the implant:
-```
-cd ebowla-2/implant
-go build -ldflags "-X main.seedPath=<path to search for seed files>"
+cd example
+go build
+mv example.exe ..\package\example.exe
+cd ..\package\
+go run .\main.go -s 'C:\Windows\System32\AboveLockAppHost.dll' -p .\example.exe
+mv .\package ..\implant\
+cd ..\implant\
+go build -ldflags "-X main.seedPath=C:\Windows\System32"
 .\implant.exe
 ```
 
