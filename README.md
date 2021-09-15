@@ -30,7 +30,7 @@ Demos:
 # Payload Support
 |Shared Object|
 |:-----|
-|Reflective DLL|
+|exe|
 
 ### Contributors
 Original Project:
